@@ -1,14 +1,13 @@
 """Generate RS-485/UART style waveform visualisations.
 
-This script reuses the plot helper from the blog post draft and saves the
-figures into ``docs/test``.  Use the ``--runs`` flag to execute the simulation
-multiple times so that the noise realisation changes per run.
+The original helper wrote images to disk, but for exploratory use it's more
+useful to view the plots interactively.  Run the script and it will open the
+requested number of simulation windows so you can inspect each random
+realisation.
 """
 from __future__ import annotations
 
 import argparse
-import pathlib
-
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -68,15 +67,14 @@ def plot_rs485_uart(ax: plt.Axes, baud: float = 1e6, oversample: int = 16,
     )
 
 
-def run_simulation(output_dir: pathlib.Path, run_index: int) -> pathlib.Path:
+def run_simulation(run_index: int) -> plt.Figure:
     fig, ax = plt.subplots(figsize=(9, 3))
     plot_rs485_uart(ax)
-    plt.tight_layout()
-
-    output_path = output_dir / f"rs485_uart_waveform_{run_index:02d}.png"
-    fig.savefig(output_path, dpi=160, bbox_inches="tight")
-    plt.close(fig)
-    return output_path
+    fig.tight_layout()
+    manager = getattr(fig.canvas, "manager", None)
+    if manager is not None:
+        manager.set_window_title(f"RS-485/UART simulation #{run_index}")
+    return fig
 
 
 def parse_args() -> argparse.Namespace:
@@ -84,25 +82,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--runs",
         type=int,
-        default=3,
-        help="Number of times to run the simulation (default: 3)",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=pathlib.Path,
-        default=pathlib.Path("docs/test"),
-        help="Directory to store generated figures",
+        default=1,
+        help="Number of times to run the simulation (default: 1)",
     )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-
+    figures = []
     for run in range(1, args.runs + 1):
-        path = run_simulation(args.output_dir, run)
-        print(f"Saved {path}")
+        figures.append(run_simulation(run))
+        print(f"Prepared simulation run {run}")
+
+    if figures:
+        plt.show()
 
 
 if __name__ == "__main__":
