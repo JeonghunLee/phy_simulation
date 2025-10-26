@@ -34,7 +34,7 @@ def demo_cdr_phase_error(
     Ki: float = 0.00015,
     idle_region=(2800, 3400),
     seed: int = 42,
-    save_path: str = "cdr_phase_error.png",
+    save_path: str = "../docs/test/cdr_phase_error.png",
 ):
     """Very simplified PCIe/CXL-like bang-bang CDR with PI loop.
     - PLL keeps frequency (RefClk), CDR aligns phase using transitions.
@@ -121,7 +121,7 @@ def demo_equalization(
     ctle_pole_hz: float = 20e9,
     dfe_tap: float = 0.2,
     seed: int = 1,
-    save_path: str = "eq_channel_vs_equalized.png",
+    save_path: str = "../docs/test/eq_channel_vs_equalized.png",
 ):
     """Toy channel ISI + CTLE (HP) + 1-tap DFE to illustrate inverse filtering.
     - Generate NRZ symbols, upsample, pass through LPF channel → ISI 발생
@@ -187,7 +187,7 @@ def demo_link_training_fsm(
     steps: int = 400,
     ber_threshold: float = 1e-6,
     seed: int = 3,
-    save_path: str = "link_training_fsm.png",
+    save_path: str = "../docs/test/link_training_fsm.png",
 ):
     """Minimal FSM showing Polling→Configuration/Equalization→L0 convergence.
     - Random channel SNR that gradually improves as EQ coeffs adapt.
