@@ -30,7 +30,9 @@ CXL 와 PCIe도 각 Phase Detect기반으로 생각하여, 관련부분을 DSP�
 
 * PHY(Tranceiver)를 DSP기반으로 각 부분 Simulation 하는 부분을 생각 
     * PHY TEST 
-        * 여러 고속 Serial Interface PHY들 (USB,PCIe,MIPI등)     
+        * 여러 고속 Serial Interface PHY들 (USB,PCIe,MIPI등)   
+        * Scope의 Probe 대신 RF Mixer 걸쳐 Filter  적용하는 방식으로 생각     
+        * 나중에 다시 생각을 해보고, 진행   
 
 
 <br/>
