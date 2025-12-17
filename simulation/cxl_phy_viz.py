@@ -34,7 +34,7 @@ def demo_cdr_phase_error(
     Ki: float = 0.00015,
     idle_region=(2800, 3400),
     seed: int = 42,
-    save_path: str = "../docs/test/cdr_phase_error.png",
+    save_path: str = "./cdr_phase_error.png",
 ):
     """Very simplified PCIe/CXL-like bang-bang CDR with PI loop.
     - PLL keeps frequency (RefClk), CDR aligns phase using transitions.
